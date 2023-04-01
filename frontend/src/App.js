@@ -1,11 +1,12 @@
 //App.js
 
 import { useState, useEffect } from 'react';
-import { Box, Grid, Input, Stack, Wrap, WrapItem, Button } from '@chakra-ui/react';
+import { Box, Input, Stack, Button, Wrap, WrapItem, Grid } from '@chakra-ui/react';
 import RecipeCard from './RecipeCard';
 import ColoredTag from './ColoredTag';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import SelectedRecipes from './selectedRecipes';
+import { useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import SelectedRecipesCard from './SelectedRecipesCard';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -19,7 +20,8 @@ function App() {
       try {
         const response = await fetch('/api/recipes');
         const data = await response.json();
-        setRecipes(data);
+        const randomizedData = data.sort(() => Math.random() - 0.5);
+        setRecipes(randomizedData);
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
@@ -53,7 +55,7 @@ function App() {
   };
 
   const applySelectedRecipes = () => {
-    navigate('/selected-recipes', { state: { selectedRecipes } });
+    navigate('/selected-recipes', { state: { selectedRecipes: selectedRecipes } });
   };
 
   return (
@@ -76,7 +78,13 @@ function App() {
             Apply
           </Button>
         </Stack>
-        <Wrap spacing={4} ml={40} mr={40} mb={20} justify="center">
+        <SelectedRecipesCard
+          recipes={selectedRecipes}
+          onUnselect={(recipe) => {
+            setSelectedRecipes(selectedRecipes.filter((r) => r.id !== recipe.id));
+          }}
+        />
+        <Wrap spacing={4} ml={40} mr={40} mb={10} mt={10} justify="center">
           {uniqueTags.map((tag) => (
             <WrapItem key={tag}>
               <ColoredTag
@@ -91,7 +99,6 @@ function App() {
         </Wrap>
         <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6} px={[2, null, null, 8]}>
           {filteredRecipes
-            .sort(() => Math.random() - 0.5)
             .sort((a, b) => (a.imageUrl ? -1 : 1))
             .map((recipe) => (
               <RecipeCard
@@ -104,12 +111,7 @@ function App() {
             ))}
         </Grid>
       </Box>
-      <Routes>
-        <Route
-          path="/selected-recipes"
-          element={<SelectedRecipes recipes={selectedRecipes} />}
-        />
-      </Routes>
+      <Outlet />
     </>
   );
 }
