@@ -12,7 +12,7 @@ const ColoredTag = ({ tag, isSelected, variant, ...props }) => {
     };
 
     const hoverBgColor = {
-        Rotation: 'purple.700',
+        Rotation: 'orange.700',
         Protein: 'red.700',
         Carb: 'yellow.700',
         Veggie: 'green.700',
@@ -21,7 +21,7 @@ const ColoredTag = ({ tag, isSelected, variant, ...props }) => {
     };
 
     const selectedBgColor = {
-        Rotation: 'purple.900',
+        Rotation: 'orange.900',
         Protein: 'red.900',
         Carb: 'yellow.900',
         Veggie: 'green.900',
