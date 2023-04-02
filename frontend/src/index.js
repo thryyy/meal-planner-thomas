@@ -1,14 +1,20 @@
+//index.js
+
 import * as React from "react";
 import ReactDOM from "react-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
-import { BrowserRouter } from 'react-router-dom';
+import SelectedRecipes from './SelectedRecipes';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ChakraProvider>
-        <App />
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/selected-recipes" element={<SelectedRecipes />} />
+        </Routes>
       </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>,

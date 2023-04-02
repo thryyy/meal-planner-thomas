@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 
 const ColoredTag = ({ tag, isSelected, variant, ...props }) => {
     const bgColor = {
-        Rotation: 'purple.500',
+        Rotation: 'orange.500',
         Protein: 'red.500',
         Carb: 'yellow.500',
         Veggie: 'green.500',

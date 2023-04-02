@@ -1,6 +1,6 @@
 //RecipeCard.js
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     AspectRatio,
     Box,
@@ -13,33 +13,34 @@ import {
 import defaultImage from './img/default.jpg';
 import ColoredTag from './ColoredTag';
 
-function RecipeCard({ recipe, onTagClick, onSelect }) {
+
+function RecipeCard({ recipe, onTagClick, onSelect, isSelected: initialIsSelected }) {
     const [isImageLoaded, setImageLoaded] = useState(false);
-    const [isSelected, setIsSelected] = useState(false);
+    const [isSelected, setIsSelected] = useState(initialIsSelected);
     const tags = recipe.tags || [];
 
     const handleCardClick = (event) => {
         event.preventDefault();
         setIsSelected(!isSelected);
         if (onSelect) {
-          onSelect(recipe);
+            onSelect(recipe);
         }
-      };
+    };
 
     useEffect(() => {
-        setIsSelected(isSelected);
-    }, [isSelected]);
+        setIsSelected(initialIsSelected);
+    }, [initialIsSelected]);
 
     return (
         <GridItem colSpan={[1, null, null, 1]} mb={4}>
             <Box
                 as="article"
                 maxW="sm"
-                borderWidth="1px"
+                borderWidth="5px"
                 borderRadius="lg"
                 overflow="hidden"
                 onClick={(event) => handleCardClick(event)}
-                borderColor={isSelected ? 'blue.500' : 'transparent'}
+                borderColor={isSelected ? 'purple.500' : 'transparent'}
                 cursor="pointer"
             >
                 <AspectRatio ratio={3 / 4}>
@@ -98,4 +99,4 @@ function RecipeCard({ recipe, onTagClick, onSelect }) {
     );
 }
 
-export default RecipeCard;
+export default React.memo(RecipeCard);
