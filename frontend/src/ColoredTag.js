@@ -1,4 +1,5 @@
 // ColoredTag.js
+
 import { Box } from '@chakra-ui/react';
 
 const ColoredTag = ({ tag, isSelected, variant, ...props }) => {
