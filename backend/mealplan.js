@@ -2,14 +2,15 @@ import express from 'express';
 import { getAllRecipes } from './recipes.js';
 import { shuffleArray } from './utils.js';
 import notion from './notion.js';
-import { databaseId } from './index.js';
+
+const {  DATABASE_ID } = process.env;
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
         // Fetch all recipes
-        const recipes = await getAllRecipes(databaseId, notion);
+        const recipes = await getAllRecipes(DATABASE_ID, notion);
 
         // Shuffle the recipes array
         const shuffledRecipes = shuffleArray(recipes);

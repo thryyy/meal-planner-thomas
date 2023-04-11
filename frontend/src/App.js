@@ -7,6 +7,7 @@ import ColoredTag from './ColoredTag';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import SelectedRecipesCard from './SelectedRecipesCard';
+const { REACT_APP_BACKEND_URL } = process.env
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -18,7 +19,8 @@ function App() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes');
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/api/recipes`);
+        console.log('Response headers:', response.headers);
         const data = await response.json();
         const randomizedData = data.sort(() => Math.random() - 0.5);
         setRecipes(randomizedData);
